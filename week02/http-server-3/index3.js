@@ -51,27 +51,43 @@ app.post("/", function (req, res) {
 
 //replacing(updating) an unhealthy kidney with healthy kidney
 app.put("/", function (req, res) {
-  for (let i = 0; i < users[0].kidneys.length; i++) {
-    users[0].kidneys[i].healthy = true;
-  }
+  if (isTheirAtleastOneUnhealthyKidney()) {
+    for (let i = 0; i < users[0].kidneys.length; i++) {
+      users[0].kidneys[i].healthy = true;
+    }
 
-  res.json({
-    msg: "unhealthy kidneys are replaced.",
-  });
+    res.json({
+      msg: "unhealthy kidney replaced.",
+    });
+  } else {
+    res.json({ msg: "You already have healthy kidneys" });
+  }
 });
 
 //removing all the unhealthy kidneys
 app.delete("/", function (req, res) {
   const newKidneys = [];
-  for (let i = 0; i < users[0].kidneys.length; i++) {
-    if (users[0].kidneys[i].healthy) {
-      newKidneys.push({
-        healthy: true,
-      });
+  if (isTheirAtleastOneUnhealthyKidney()) {
+    for (let i = 0; i < users[0].kidneys.length; i++) {
+      if (users[0].kidneys[i].healthy) {
+        newKidneys.push({
+          healthy: true,
+        });
+      }
     }
+    users[0].kidneys = newKidneys;
+    res.json({ msg: "done" });
+  } else {
+    res.json({ msg: "Cannot remove : No kidney was present" });
   }
-  users[0].kidneys = newKidneys;
-  res.json({ msg: "done" });
 });
+
+function isTheirAtleastOneUnhealthyKidney() {
+  let atleastOneUnhealthyKidney = false;
+  for (let i = 0; i < users[0].kidneys.length; i++) {
+    if (!users[0].kidneys[i].healthy) atleastOneUnhealthyKidney = true;
+  }
+  return atleastOneUnhealthyKidney;
+}
 
 app.listen(port);
