@@ -12,10 +12,43 @@
     - For any other route not defined in the server return 404
     Testing the server - run `npm run test-fileServer` command in terminal
  */
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+
+// const directoryPath = path.join(__dirname, "./files/"); // directpryPath -> absolute path to the directory where you want to read the content of the directory
+//__dirname- special variable that represents the current working directory of the script
+
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const app = express();
 
+//GET /files - Returns a list of files present in `./files/` directory
+app.get("/files", function (req, res) {
+  const directoryPath = path.join(__dirname, "./files/");
+  fs.readdir(directoryPath, function (err, files) {
+    if (err) {
+      res.status(500).json({ error: "Failed to retrieve the files." });
+    } else {
+      res.status(200).send(files);
+    }
+  });
+});
+
+//GET /file/:filename - Returns content of given file by name
+app.get("/file/:filename", function (req, res) {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, "./files/", filename);
+
+  fs.readFile(filePath, "utf-8", function (err, data) {
+    if (err) {
+      res.status(404).send("File not found");
+    }
+    res.status(200).send(data);
+  });
+});
+
+//For any other route not defined in the server return 404
+app.all("*", (req, res) => {
+  res.status(404).send("Route not found");
+});
 
 module.exports = app;
