@@ -36,6 +36,14 @@ app.use(async (req, res, next) => {
   }
 });
 
+app.get("/home", (req, res) => {
+  res.send("Hi,there! Welcome to the Home page.");
+});
+
+app.post("/postroute", (req, res) => {
+  res.send("I am from post route");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening at port: ${PORT}`);
 });
