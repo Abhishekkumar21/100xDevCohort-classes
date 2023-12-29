@@ -2,6 +2,8 @@
 //incoming request being sent to server,
 // in a txt file inside a subdirectory of root project directory
 
+require("dotenv").config();
+
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
