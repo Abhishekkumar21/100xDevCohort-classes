@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Simple Interest Calculator</title>
+    </head>
+
+    <script>
+        //Debouncing
+        let timeout;
+        function debouncedCalculateSI(){
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){calculateSI()}, 3000)
+        };
+
+        async function calculateSI(){
+            const p = document.getElementById('principal').value;
+            const r = document.getElementById('rate').value;
+            const t = document.getElementById('years').value;
+            const response = await fetch(`http://localhost:3001/simpleInterest?principal=${p}&rate=${r}&years=${t}`);
+            const siData= await response.json();   
+            //console.log('siData type is : ', typeof siData); //object
+
+            document.getElementById('displaySI').innerHTML = ''; //clears the div with id #displaySI after each call of calculateSI()
+            //rendering the data into Table formate:
+            const tableElement = document.createElement('table');
+            for(const key in siData) {
+                const row = tableElement.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+
+                cell1.textContent = key
+                cell2.textContent = siData[key];
+            }
+            document.getElementById('displaySI').appendChild(tableElement); 
+        }
+    </script>
+
+    <body>
+        <input oninput="debouncedCalculateSI()" type="text" id="principal" placeholder="Enter the principal amount"><br><br>
+        <input oninput="debouncedCalculateSI()" type="text" id="rate" placeholder="Enter the rate percentage"><br><br>
+        <input oninput="debouncedCalculateSI()" type="text" id="years" placeholder="Enter the time (in years only)"><br>
+        <div> <strong>Result</strong></div>
+        <div id="displaySI"></div>
+
+    </body>
+</html>

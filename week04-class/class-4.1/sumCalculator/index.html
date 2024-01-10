@@ -1,0 +1,54 @@
+//Utilizing Fetch API concept by creating a simple calucator for summing two numbers
+//[calucator features : 2 i/p boxes and one calulate button]
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Introduction</title>
+</head>
+<script>
+
+    function debouncedPopolateDiv(){
+
+    }
+
+    function populateDiv() {
+        const a = document.getElementById("firstNumber").value;
+        const b = document.getElementById("secondNumber").value;
+        // const element = document.getElementById("displaySum");
+        // element.innerHTML = parseInt(a) + parseInt(b);
+
+        //using Fetch API to fetch the data(sum) from the server which a logic exposed to calcuate the sum of 2 numbers
+        fetch('http://localhost:3000/sum?a=' + a + '&b=' + b)  //this line is a dumb way to send user input into the request
+            .then(response => {
+                response.text()
+                    .then(ans => {
+                        document.getElementById("displaySum").innerHTML = ans;
+                    })
+            });
+        }
+
+        //async-await syntax for fetch API
+        async function populateDiv2(){
+            const a = document.getElementById("firstNumber").value;
+            const b = document.getElementById("secondNumber").value;
+
+            const response = await fetch('http://localhost:3000/sum?a=' + a + '&b=' + b);
+            const ans = await response.text();
+            document.getElementById("displaySum").innerHTML = ans;
+            
+        }
+</script>
+
+<body>
+        <!-- <input id="firstNumber" type="text" placeholder="Enter first number" ><br><br>
+        <input id="secondNumber" type="text" placeholder="Enter second number"><br><br>
+        <button onclick="populateDiv2()">Calculate Sum</button>
+        <div id="displaySum"></div> -->
+
+        
+</body>
+</html>
