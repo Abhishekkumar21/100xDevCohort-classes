@@ -42,7 +42,7 @@ router.post("/courses", adminMiddleware, (req, res) => {
     price,
     imageLink,
   }).then((newCourse) => {
-    res.json({ msg: "New Course Created!", couseId: newCourse._id });
+    res.json({ msg: "New Course Created!", courseId: newCourse._id });
   });
 });
 
