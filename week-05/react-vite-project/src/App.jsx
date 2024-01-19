@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import  { useState } from 'react' //importing the hook- useState from 'react' core library
+
+// import './App.css'
+
+// //Defining a component - named 'App'
+// function App() {
+//   //initializing the state
+//    const [count, setCount] = useState(0);
+
+//     //updating the state - count
+//   // function onClickHandler (){
+//   //   setCount(count + 1);
+//   // }
+
+//   //returning the dynamic part
+//   return (
+//   //  <div>
+//   //   <button onClick ={onClickHandler}> Counter {count}</button>
+//   //  </div>
+//   )
+// }
+
+// export default App
+
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------
+
+import { useState } from 'react';
+
+
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <CustomButton count={count} setCount={setCount}></CustomButton>
+    </div>
+  );
 }
 
-export default App
+//better way to defining your components and calling then inside the APP() component for rendering.
+function CustomButton(props) {
+  
+  function onClickHandler() {
+    props.setCount(props.count + 1);
+  }
+
+  return <button onClick={onClickHandler}>Counter {props.count}</button>;
+}
+
+export default App;
+
