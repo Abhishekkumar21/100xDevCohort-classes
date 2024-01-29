@@ -129,56 +129,90 @@
 
 //--------------------------- Keys in react --------------------------------------------------------------
 
-import { useState } from "react";
+// import { useState } from "react";
 
-let counter = 4;
+// let counter = 4;
 
-function App() {
-  const [todos, setTodos] = useState([{
-    id: 1,
-    title: 'go to gym',
-    description: 'got to gym 7-9 AM'
-  }, {
-    id: 2,
-    title:'go to music class',
-    desxription: 'music class: 10-12 AM'
-  }, {
-    id: 3,
-    title: 'go to shopping',
-    description: 'shopping: 4-5 PM'
-  }
-]);
+// function App() {
+//   const [todos, setTodos] = useState([{
+//     id: 1,
+//     title: 'go to gym',
+//     description: 'got to gym 7-9 AM'
+//   }, {
+//     id: 2,
+//     title:'go to music class',
+//     desxription: 'music class: 10-12 AM'
+//   }, {
+//     id: 3,
+//     title: 'go to shopping',
+//     description: 'shopping: 4-5 PM'
+//   }
+// ]);
 
-  function addTodo(){
-    setTodos([...todos, {
-      id: counter++,
-      title: `New todo : ${Math.random()}`,
-      description: "This is new todo that is added"
-    }])
-  }
+//   function addTodo(){
+//     setTodos([...todos, {
+//       id: counter++,
+//       title: `New todo : ${Math.random()}`,
+//       description: "This is new todo that is added"
+//     }])
+//   }
 
-  return(
-   <div>
-    <button onClick={addTodo}>Add a todo</button>
-    {/* {todos.map(todo => <Todo title={todo.title} description={todo.description}/>)} */}
-    {todos.map(todo => <Todo key ={todo.id}title={todo.title} description={todo.description}/>)}
+//   return(
+//    <div>
+//     <button onClick={addTodo}>Add a todo</button>
+//     {/* {todos.map(todo => <Todo title={todo.title} description={todo.description}/>)} */}
+//     {todos.map(todo => <Todo key ={todo.id}title={todo.title} description={todo.description}/>)}
 
-   </div>
-  )
+//    </div>
+//   )
 
-}
+// }
 
-function Todo({title, description}){
-  return(
-    <div>
-      <h2>
-        {title}
-      </h2>
-      <h5>
-        {description}
-      </h5>
-    </div>
-  )
-}
+// function Todo({title, description}){
+//   return(
+//     <div>
+//       <h2>
+//         {title}
+//       </h2>
+//       <h5>
+//         {description}
+//       </h5>
+//     </div>
+//   )
+// }
 
-export default App
+// export default App
+
+//each child component should have the key assigned to itself
+
+//--------------------------------------------------------------------------------------------
+                          //Wrapper component
+
+// function App(){
+//   return <div>
+//    <CardWrapper> <TextComponent1/> </CardWrapper>
+
+//    <CardWrapper> <TextComponent2/> </CardWrapper>
+//   </div>
+// }
+
+// function CardWrapper({children}){
+//   // props-children will have the access to all the things passed to CardWrapper component
+//   return <div style={{border: "2px solid black"}}>
+//     {children}
+//   </div>  
+// }
+
+// function TextComponent1() {
+//   return <div>
+//     hi there 1
+//   </div>
+// }
+
+// function TextComponent2() {
+//   return <div>
+//     hi there 2
+//   </div>
+// }
+
+// export default App
