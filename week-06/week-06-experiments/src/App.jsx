@@ -99,30 +99,84 @@
 
 //---------------using React.memo()--------------------------------------------------------------------
 
-import React, { useState } from "react"
+// import React, { useState } from "react"
+// function App() {
+//    const [title, setTitle] = useState("My name is Abhishek1")
+//   function udpateTitle(){
+//       setTitle(`My name is ${Math.random()}`);
+//    }
+
+//   return(
+//     <div>
+//       <button onClick={udpateTitle}>Update the title</button>
+//       <Header title={title}></Header>
+//       <Header title='My name is Abhishek2'></Header>
+//       <Header title='My name is Abhishek3'></Header>
+//     </div>
+//       )
+// }
+
+// const Header = React.memo(function Header({title}) {
+//   return(
+//     <div>
+//       {title}
+//     </div>
+//   )
+// })
+
+// export default App
+
+
+//--------------------------- Keys in react --------------------------------------------------------------
+
+import { useState } from "react";
+
+let counter = 4;
+
 function App() {
-   const [title, setTitle] = useState("My name is Abhishek1")
-  function udpateTitle(){
-      setTitle(`My name is ${Math.random()}`);
-   }
+  const [todos, setTodos] = useState([{
+    id: 1,
+    title: 'go to gym',
+    description: 'got to gym 7-9 AM'
+  }, {
+    id: 2,
+    title:'go to music class',
+    desxription: 'music class: 10-12 AM'
+  }, {
+    id: 3,
+    title: 'go to shopping',
+    description: 'shopping: 4-5 PM'
+  }
+]);
+
+  function addTodo(){
+    setTodos([...todos, {
+      id: counter++,
+      title: `New todo : ${Math.random()}`,
+      description: "This is new todo that is added"
+    }])
+  }
 
   return(
-    <div>
-      <button onClick={udpateTitle}>Update the title</button>
-      <Header title={title}></Header>
-      <Header title='My name is Abhishek2'></Header>
-      <Header title='My name is Abhishek3'></Header>
-    </div>
-      )
+   <div>
+    <button onClick={addTodo}>Add a todo</button>
+    {todos.map(todo => <Todo title={todo.title} description={todo.description}/>)}
+   </div>
+  )
+
 }
 
-const Header = React.memo(function Header({title}) {
+function Todo({title, description}){
   return(
     <div>
-      {title}
+      <h2>
+        {title}
+      </h2>
+      <h5>
+        {description}
+      </h5>
     </div>
   )
-})
+}
 
 export default App
-
