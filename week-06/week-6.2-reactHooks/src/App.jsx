@@ -35,47 +35,119 @@
 // How would the dependency array change?
 // https://sum-server.100xdevs.com/todo?id=1
 
-import { useState, useEffect } from "react"
-import axios from "axios"
+// import { useState, useEffect } from "react"
+// import axios from "axios"
 
-export default function App() {
-  const [btnNumber, setBtnNumber] = useState(1)
+// export default function App() {
+//   const [btnNumber, setBtnNumber] = useState(1)
 
-  return (
-    <>
-      <button onClick={() => setBtnNumber(1)}>1</button>
-      <button onClick={() => setBtnNumber(2)}>2</button>
-      <button onClick={() => setBtnNumber(3)}>3</button>
-      <button onClick={() => setBtnNumber(4)}>4</button>
-      <Todo id={btnNumber} />
+//   return (
+//     <>
+//       <button onClick={() => setBtnNumber(1)}>1</button>
+//       <button onClick={() => setBtnNumber(2)}>2</button>
+//       <button onClick={() => setBtnNumber(3)}>3</button>
+//       <button onClick={() => setBtnNumber(4)}>4</button>
+//       <Todo id={btnNumber} />
 
-    </>
-  )
-}
+//     </>
+//   )
+// }
 
-function Todo({ id }) {
-  const [todo, setTodo] = useState({});
+// function Todo({ id }) {
+//   const [todo, setTodo] = useState({});
 
-  // useEffect(() => {
-  //   axios.get("https://sum-server.100xdevs.com/todo?" + "id=" + id)
-  //     .then(response => setTodo(response.data.todo))
-  // }, [])   //dependency array is empty, axios api call will made only once when the 'Todo' comp will render for
-  // for the first time
+//   // useEffect(() => {
+//   //   axios.get("https://sum-server.100xdevs.com/todo?" + "id=" + id)
+//   //     .then(response => setTodo(response.data.todo))
+//   // }, [])   //dependency array is empty, axios api call will made only once when the 'Todo' comp will render for
+//   // for the first time
 
-  //passing 'id' in the dependency aaray so that axios api call can be made everytime 'id' changes upon clicking
-  // different buttons
+//   //passing 'id' in the dependency aaray so that axios api call can be made everytime 'id' changes upon clicking
+//   // different buttons
 
-  useEffect(() => {
-    axios.get("https://sum-server.100xdevs.com/todo?" + "id=" + id)
-      .then(response => setTodo(response.data.todo))
-  }, [id])
+//   useEffect(() => {
+//     axios.get("https://sum-server.100xdevs.com/todo?" + "id=" + id)
+//       .then(response => setTodo(response.data.todo))
+//   }, [id])
 
-  return (
-    <>
-      <p>Id : {id}</p>
-      <h2>{todo.title}</h2>
-      <p>{todo.description}</p>
-    </>
+//   return (
+//     <>
+//       <p>Id : {id}</p>
+//       <h2>{todo.title}</h2>
+//       <p>{todo.description}</p>
+//     </>
 
-  )
-}
+//   )
+// }
+
+
+
+//------------useMemo() hook ---------------------------------------------------------------------------------
+
+//If I ask you to create an app that does two things -
+// 1. Increases a counter by 1
+// 2. Lets user put a value in an input box (n) and you need
+// to show sum from 1-n
+// One restriction - everything needs to be inside App
+
+// import { useState } from "react";
+// import { useMemo } from "react";
+
+// export default function App() {
+//   const [count, setCount] = useState(0);
+//   const [userInput, setUserInput] = useState(1);
+
+
+//   // let sum = 0;
+//   // for (let i = 1; i <= userInput; i++) {
+//   //   sum = sum + i;
+//   // }
+
+//   //useMemo - sum will render only when the userInput is changed, not everytime App component renders
+//   let sum = useMemo(() => {
+//     let sum = 0;
+//     for (let i = 1; i <= userInput; i++) {
+//       sum = sum + i;
+//     }
+//     return sum;
+//   }, [userInput])
+
+//   function onClickHandler() {
+//     setCount(count + 1)
+//   }
+//   function onChangeHandler(e) {
+//     setUserInput(e.target.value)
+//     console.log(userInput)
+//   }
+
+//   return (
+//     <>
+//       <input type='text' placeholder="Enter the number(n):" onChange={onChangeHandler}></input>
+//       <br />
+//       The sum from 1 to {userInput} : {sum}
+//       <br />
+//       <button onClick={onClickHandler}>Counter({count})</button>
+//     </>
+//   )
+// }
+
+//Que: is the above codebase is optimal? - No
+// Why is this codebase is not optiomal?
+//when you click on the counter button -> state variable"count" gets changed and re-render
+// of the App component happens => count value on button changed , also the re-render of input element happened& also the sum operation
+// also happend again  which an expensive operation
+// Every time, button clicked -> counter changes, also the sum operations happens again whether input is changed or not
+// So, runnig the sum operation with  each click on couter button, making the codebase
+// not optimized.
+//Ideally what should happen with 'sum' thing? - this opearation should happen only when the input changes.
+// so to skip the re-render or "Sum", we'll pass its logic to a hook - useMemo()
+//useMemo() is similar to useEffect() - syntax-wise.
+// useEffect() can also be used in this case but it make us create an extra state variable and which causes the on extra render than useMemo().
+
+//Explore: Diff. b/w useMemo() and useEffect()
+
+
+
+//--------useCallback():------------------------------------------------------------
+
+
