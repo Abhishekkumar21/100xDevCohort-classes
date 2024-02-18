@@ -149,5 +149,55 @@
 
 
 //--------useCallback():------------------------------------------------------------
+// Create a counter component with increment and decrement functions. Pass these functions to a child component which has buttons to perform the increment and decrement actions. 
+//Use useCallback to ensure that these functions are not recreated on every render.
+import { memo, useCallback, useState } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(0);
+
+    const incrementHandler = useCallback(
+        function () {
+            setCount(Currentcount => Currentcount + 1)
+        }, []
+    )
+
+    const decrementHandler = useCallback(
+        function () {
+            setCount(Currentcount => Currentcount - 1)
+        }, []
+    )
+
+
+    console.log("Parent App component re-rendered")
+    return (
+        <>
+            <p>Count : {count}</p>
+            <ChildComponent increment={incrementHandler} decrement={decrementHandler} />
+        </>
+    )
+}
+
+const ChildComponent = memo(
+    function ({ increment, decrement }) {
+        console.log("Child Component re-rendered")
+        return (
+            <>
+                <button onClick={increment}>Increment</button>
+                <button onClick={decrement}>Decrement</button>
+            </>
+        )
+    }
+)
+
+// function ChildComponent({ increment, decrement }) {
+//     console.log("Child Component re-rendered")
+//     return (
+//         <>
+//             <button onClick={increment}>Increment</button>
+//             <button onClick={decrement}>Decrement</button>
+//         </>
+//     )
+// }
 
 
