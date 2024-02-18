@@ -151,44 +151,44 @@
 //--------useCallback():------------------------------------------------------------
 // Create a counter component with increment and decrement functions. Pass these functions to a child component which has buttons to perform the increment and decrement actions. 
 //Use useCallback to ensure that these functions are not recreated on every render.
-import { memo, useCallback, useState } from 'react'
+// import { memo, useCallback, useState } from 'react'
 
-export default function App() {
-    const [count, setCount] = useState(0);
+// export default function App() {
+//     const [count, setCount] = useState(0);
 
-    const incrementHandler = useCallback(
-        function () {
-            setCount(Currentcount => Currentcount + 1)
-        }, []
-    )
+//     const incrementHandler = useCallback(
+//         function () {
+//             setCount(Currentcount => Currentcount + 1)
+//         }, []
+//     )
 
-    const decrementHandler = useCallback(
-        function () {
-            setCount(Currentcount => Currentcount - 1)
-        }, []
-    )
+//     const decrementHandler = useCallback(
+//         function () {
+//             setCount(Currentcount => Currentcount - 1)
+//         }, []
+//     )
 
 
-    console.log("Parent App component re-rendered")
-    return (
-        <>
-            <p>Count : {count}</p>
-            <ChildComponent increment={incrementHandler} decrement={decrementHandler} />
-        </>
-    )
-}
+//     console.log("Parent App component re-rendered")
+//     return (
+//         <>
+//             <p>Count : {count}</p>
+//             <ChildComponent increment={incrementHandler} decrement={decrementHandler} />
+//         </>
+//     )
+// }
 
-const ChildComponent = memo(
-    function ({ increment, decrement }) {
-        console.log("Child Component re-rendered")
-        return (
-            <>
-                <button onClick={increment}>Increment</button>
-                <button onClick={decrement}>Decrement</button>
-            </>
-        )
-    }
-)
+// const ChildComponent = memo(
+//     function ({ increment, decrement }) {
+//         console.log("Child Component re-rendered")
+//         return (
+//             <>
+//                 <button onClick={increment}>Increment</button>
+//                 <button onClick={decrement}>Decrement</button>
+//             </>
+//         )
+//     }
+// )
 
 // function ChildComponent({ increment, decrement }) {
 //     console.log("Child Component re-rendered")
@@ -199,5 +199,40 @@ const ChildComponent = memo(
 //         </>
 //     )
 // }
+
+
+//----------------useRef()---------------------------------------------------------
+//useRef lets you reference a value across the re-renders and also lets you reference 
+// a DOM element and then you can manipulate that element explicitly
+
+//use case: Manipulating the DOM
+// create a component that have an input text box and a button - focus to the text box  when clicked
+//use case: Retaining a value across the re-renders -
+// create a component that calculate and displays the number of times component has renders
+
+
+//1.create a component that have an input text box and a button - focus to the text box  when clicked
+import { useState, useRef, useEffect } from 'react';
+
+export default function App() {
+
+    const [, setDummyState] = useState(0);
+    const numberOfTimesReRenders = useRef(0)
+    useEffect(() => {
+        numberOfTimesReRenders.current = numberOfTimesReRenders.current + 1
+    })
+
+    console.log("Component re-rendered")
+    return (
+        <>
+            <p> The component has rendered {numberOfTimesReRenders.current} times.</p>
+            <button onClick={() => setDummyState(Math.random())}>Force re-render</button>
+        </>
+    )
+
+}
+
+
+
 
 
