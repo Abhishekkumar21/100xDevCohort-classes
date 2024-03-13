@@ -10,6 +10,7 @@ export default function App() {
 
   return (
     <div>
+
       <BrowserRouter>
         <AppBar />
         <Routes>
@@ -24,7 +25,7 @@ export default function App() {
 //moved AppBar() component in a seperate component file : AppBar.jsx
 
 // function AppBar() {
-//   const navigate = useNavigate();
+//   const navigate = useNavigate(); 
 
 //   return (
 //     <div style={{ background: 'skyBlue', borderBottom: '2px solid black', padding: '10px' }}>
